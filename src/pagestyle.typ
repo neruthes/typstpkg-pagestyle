@@ -43,3 +43,14 @@
   callback(result)
 }
 
+// The non-async version of the same thing. Might be dangerous. Use at your own risk!
+#let getpagestyle-sync(callback) = {
+  let s = __pagestyle_state.get()
+  let pnum = str(here().page())
+  let result = s.persistent
+  if pnum in s.overrides {
+    result = s.overrides.at(pnum)
+  }
+  return result
+}
+
