@@ -46,7 +46,7 @@ Plain foreground:
 ```typ
 #set page(foreground: {
     getpagestyle(sty => context {
-        if sty == plain {
+        if sty == "plain" {
             place(top + center, dy: -10mm, inset: 20mm, [...])
         }
         place(bottom + center, dy: 10mm, inset: 20mm, [...])
@@ -59,7 +59,7 @@ Use with `ose-pic`:
 ```typ
 #AddToShipoutFG({
     getpagestyle(sty => context {
-        if sty == plain {
+        if sty == "plain" {
             place(top + center, dy: -10mm, inset: 20mm, [...])
         }
         place(bottom + center, dy: 10mm, inset: 20mm, [...])

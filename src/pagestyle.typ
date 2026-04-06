@@ -44,7 +44,7 @@
 }
 
 // The non-async version of the same thing. Might be dangerous. Use at your own risk!
-#let getpagestyle-sync(callback) = {
+#let getpagestyle-sync() = {
   let s = __pagestyle_state.get()
   let pnum = str(here().page())
   let result = s.persistent

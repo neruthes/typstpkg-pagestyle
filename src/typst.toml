@@ -1,6 +1,6 @@
 [package]
 
-name = "pagestyle"
+name = "yemianfengge"
 version = "0.1.0"
 entrypoint = "pagestyle.typ"
 authors = ["@Neruthes"]
