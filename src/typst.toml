@@ -1,7 +1,7 @@
 [package]
 
 name = "yemianfengge"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "pagestyle.typ"
 authors = ["@Neruthes"]
 license = "MIT"

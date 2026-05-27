@@ -13,7 +13,7 @@ export VER="$(tomlq -r .package.version src/typst.toml)"
 
 case "$1" in
     pr | submit)
-        universe_dir=../typst-packages-universe/packages/preview/pagestyle/"$VER"
+        universe_dir=../typst-packages-universe/packages/preview/yemianfengge/"$VER"
         if [[ -d ../typst-packages-universe ]]; then
             rsync --dry-run -av ./src/ --exclude components "$universe_dir/" &&
             echo "Seems that we can do this!" &&
@@ -21,7 +21,7 @@ case "$1" in
         fi
         ;;
     install_local | i )
-        rsync -auv --delete --mkpath --exclude components       src/     "$HOME"/.local/share/typst/packages/local/pagestyle/"$VER"
+        rsync -auv --delete --mkpath --exclude components       src/     "$HOME"/.local/share/typst/packages/local/yemianfengge/"$VER"
         ;;
     fast | f)
         ./make.sh install_local

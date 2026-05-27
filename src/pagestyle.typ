@@ -33,6 +33,16 @@
   }
 }
 
+#let nextpagestyle(style-name) = {
+  context {
+    let pnum = str(here().page() + 1)
+    __pagestyle_state.update(s => {
+      s.overrides.insert(pnum, style-name)
+      s
+    })
+  }
+}
+
 #let getpagestyle(callback) = context {
   let s = __pagestyle_state.get()
   let pnum = str(here().page())
