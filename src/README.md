@@ -24,6 +24,15 @@ Example:
 #thispagestyle("empty")
 ```
 
+### nextpagestyle
+Set pagestyle of this page only.
+
+Example:
+
+```typ
+#nextpagestyle("empty")
+```
+
 ### getpagestyle
 Get the pagestyle of the current page.
 
@@ -57,7 +66,7 @@ Plain foreground:
 Use with `ose-pic`:
 
 ```typ
-#AddToShipoutFG({
+#AddToShipoutFGAll({
     getpagestyle(sty => context {
         if sty == "plain" {
             place(top + center, dy: -10mm, inset: 20mm, [...])
