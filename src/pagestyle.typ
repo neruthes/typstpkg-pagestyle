@@ -11,23 +11,42 @@
 
 
 
+#let __pagestyle_default = "plain"
+
 #let __pagestyle_state = state("__pagestyle_state", (
-  persistent: "plain",
+  persistent-log: (),
   overrides: (:),
 ))
 
+#let __pagestyle_resolve(s, pnum) = {
+  let result = __pagestyle_default
+  for entry in s.persistent-log {
+    if entry.page <= pnum {
+      result = entry.name
+    }
+  }
+  let key = str(pnum)
+  if key in s.overrides {
+    result = s.overrides.at(key)
+  }
+  result
+}
+
 #let pagestyle(style-name) = {
-  __pagestyle_state.update(s => {
-    s.persistent = style-name
-    s
-  })
+  context {
+    let pnum = here().page()
+    __pagestyle_state.update(s => {
+      s.persistent-log.push((page: pnum, name: style-name))
+      s
+    })
+  }
 }
 
 #let thispagestyle(style-name) = {
   context {
-    let pnum = str(here().page())
+    let pnum = here().page()
     __pagestyle_state.update(s => {
-      s.overrides.insert(pnum, style-name)
+      s.overrides.insert(str(pnum), style-name)
       s
     })
   }
@@ -35,32 +54,23 @@
 
 #let nextpagestyle(style-name) = {
   context {
-    let pnum = str(here().page() + 1)
+    let pnum = here().page() + 1
     __pagestyle_state.update(s => {
-      s.overrides.insert(pnum, style-name)
+      s.overrides.insert(str(pnum), style-name)
       s
     })
   }
 }
 
 #let getpagestyle(callback) = context {
-  let s = __pagestyle_state.get()
-  let pnum = str(here().page())
-  let result = s.persistent
-  if pnum in s.overrides {
-    result = s.overrides.at(pnum)
-  }
-  callback(result)
+  let s = __pagestyle_state.final()
+  let pnum = here().page()
+  callback(__pagestyle_resolve(s, pnum))
 }
 
 // The non-async version of the same thing. Might be dangerous. Use at your own risk!
 #let getpagestyle-sync() = {
-  let s = __pagestyle_state.get()
-  let pnum = str(here().page())
-  let result = s.persistent
-  if pnum in s.overrides {
-    result = s.overrides.at(pnum)
-  }
-  return result
+  let s = __pagestyle_state.final()
+  let pnum = here().page()
+  __pagestyle_resolve(s, pnum)
 }
-
